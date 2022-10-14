@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  # Reverse Proxy Konfiguration
+  nginx:
+    image: christianheimke/demo-backend-proxy
+    ports:
+    - "8080:80"
+
+  # Frontend Container, diese muss den Dienst auf Port 80 bereitstellen
+  frontend:
+    # Dieses Image mit dem eigenen Frontend-Image ersetzen
+    image: christianheimke/demo-frontend-nodejs:001
+    depends_on:
+      - nginx
+
+  # Backend Container, diese muss den Dienst auf Port 5000 bereitstellen,
+  # oder die PORT-Umgebungsvariable entsprechen konfigurieren
+  backend:
+    # Dieses Image mit dem eigenen Backend-Image ersetzen
+    image: christianheimke/demo-backend-nodejs:001
+    depends_on:
+      - nginx
